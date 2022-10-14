@@ -173,6 +173,7 @@ function Contacts(props) {
       <div className="bg-white border-bottom">
         <Input
           className="border-primary rounded m-2 pl-2 py-1"
+          style={{ width: "90%" }}
           type="text"
           placeholder="Type username to search or add new contact"
           onChange={(e) => getUsername(e)}

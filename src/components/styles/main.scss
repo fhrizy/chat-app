@@ -2,7 +2,9 @@
 
 .app {
   width: 100vw;
+  min-width: 800px;
   height: 100vh;
+  min-height: 300px;
   display: flex;
   background-color: $white;
   font-family: Arial, Helvetica, sans-serif;
@@ -52,6 +54,7 @@
     height: 210px;
     left: -40px;
     opacity: 0.4;
+    z-index: 5;
     position: absolute;
     border-radius: 0 10px 10px 0;
     background-color: $primary-2;
@@ -102,6 +105,7 @@
     background-color: $primary-2;
     border-radius: 10px 10px 0 10px;
     color: $white;
+    word-break: break-all;
   }
 }
 .message-bubble-left {
@@ -114,6 +118,7 @@
     padding: 10px;
     background-color: $white;
     border-radius: 10px 10px 10px 0;
+    word-break: break-all;
   }
 }
 
@@ -175,5 +180,25 @@
     font-size: 30px;
     font-weight: bold;
     color: $white;
+  }
+}
+
+.text-nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: 10%;
+}
+
+.button-light {
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  background-color: $white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: #cfcfcf65;
   }
 }

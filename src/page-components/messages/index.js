@@ -135,7 +135,7 @@ function Messages() {
         <span className="text-white ml-2">{name}</span>
       </div>
       {!roomId && !loading && (
-        <img style={{ width: "50%" }} alt="Not Found" src={chatEmpty} />
+        <img style={{ height: "50%" }} alt="Not Found" src={chatEmpty} />
       )}
       <BeatLoader
         loading={loading}
@@ -188,32 +188,29 @@ function Messages() {
           ))}
         </ScrollToBottom>
       )}
-      <div className="row flex flex-center bg-white py-1">
-        <div className="col-11">
-          <Input
-            disabled={!roomId}
-            className="border-primary rounded-left-2 ml-2 pl-2 py-1"
-            type="text"
-            placeholder="Message"
-            onChange={(e) => setMessage(e)}
-            value={message}
-            autoFocus={true}
-            onEnterKey={sendMessage}
+      <div className="flex flex-center bg-white py-1 w-100">
+        <Input
+          disabled={!roomId}
+          className="border-primary rounded-left-2 ml-2 pl-2 py-1"
+          type="text"
+          style={{ width: "90%" }}
+          placeholder="Message"
+          onChange={(e) => setMessage(e)}
+          value={message}
+          autoFocus={true}
+          onEnterKey={sendMessage}
+        />
+        <Button
+          disabled={!roomId}
+          className="border-primary rounded-right-2 p-1 mr-2"
+          onClick={sendMessage}
+        >
+          <FontAwesomeIcon
+            icon={faPaperPlane}
+            className="text-primary mx-1"
+            size="sm"
           />
-        </div>
-        <div className="col-1">
-          <Button
-            disabled={!roomId}
-            className="border-primary rounded-right-2 p-1"
-            onClick={sendMessage}
-          >
-            <FontAwesomeIcon
-              icon={faPaperPlane}
-              className="text-primary mx-1"
-              size="sm"
-            />
-          </Button>
-        </div>
+        </Button>
       </div>
     </div>
   );

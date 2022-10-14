@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { http_get } from "../../components/helper/axios";
+import { http_get, http_post } from "../../components/helper/axios";
 
 const state = {
   rooms: [],
@@ -16,6 +16,18 @@ export const getRooms = createAsyncThunk(
     }
   }
 );
+export const actionRoom = createAsyncThunk(
+  "chat/action-room",
+  async (data, { rejectWithValue }) => {
+    try {
+      return await http_post(`/action-room/${data.key}`, true, {
+        roomId: data.roomId,
+      });
+    } catch (error) {
+      return rejectWithValue(error.response);
+    }
+  }
+);
 
 const chatSlice = createSlice({
   name: "chat",
@@ -24,8 +36,10 @@ const chatSlice = createSlice({
     UPDATEROOMS: (state, action) => {
       const list = state.rooms;
       const data = action.payload.data;
+      console.log(list, data);
       let newMessage = list.filter((room) => room.id === data.id);
       if (newMessage.length !== 0) {
+        console.log("sudah ada");
         if (action.payload.name === data.name) {
           newMessage[0] = {
             id: data.id,
@@ -38,19 +52,26 @@ const chatSlice = createSlice({
         } else {
           newMessage[0] = data;
         }
-        var newRooms = list.map(
+        let newRooms = list.map(
           (o) => newMessage.find((n) => n.id === o.id) || o
         );
         state.rooms = newRooms;
       } else {
-        state.rooms = list;
+        console.log("belum ada");
+        state.rooms.push(data);
       }
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getRooms.fulfilled, (state, action) => {
-      state.rooms = action.payload.data;
-    });
+    builder
+      .addCase(getRooms.fulfilled, (state, action) => {
+        state.rooms = action.payload.data;
+      })
+      .addCase(actionRoom.fulfilled, (state, action) => {
+        state.rooms = state.rooms.filter(
+          (room) => room.id !== action.payload.data
+        );
+      });
   },
 });
 
