@@ -18,7 +18,7 @@ import messageReducer from "./reducers/messageReducer";
 const persistConfig = {
   key: "root",
   version: 1,
-  blacklist: ["user"],
+  blacklist: ["user", "message"],
   storage,
 };
 
@@ -51,6 +51,8 @@ export const store = configureStore({
           "contact/add-contact/fulfilled",
           "user/signin/fulfilled",
           "user/signup/fulfilled",
+          "user/auth/rejected",
+          "chat/action-room/fulfilled",
         ],
         ignoredPaths: ["payload.config.adapter"],
       },

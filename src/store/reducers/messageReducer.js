@@ -24,6 +24,9 @@ const messageSlice = createSlice({
     UPDATEMESSAGE: (state, action) => {
       state.messages.push(action.payload);
     },
+    EMPTYMESSAGE: (state, action) => {
+      state.messages = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getMessages.fulfilled, (state, action) => {
@@ -32,7 +35,7 @@ const messageSlice = createSlice({
   },
 });
 
-export const { UPDATEMESSAGE } = messageSlice.actions;
+export const { UPDATEMESSAGE, EMPTYMESSAGE } = messageSlice.actions;
 export const selectMessages = (state) => state.message.messages;
 
 export default messageSlice.reducer;
