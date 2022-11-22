@@ -51,9 +51,11 @@ const userReducer = createSlice({
     builder
       .addCase(signin.fulfilled, (state, action) => {
         state.user = action.payload.data;
+        localStorage.setItem("id", action.payload.data.id);
       })
       .addCase(auth.fulfilled, (state, action) => {
         state.user = action.payload.data;
+        localStorage.setItem("id", action.payload.data.id);
       });
   },
 });

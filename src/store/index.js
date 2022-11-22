@@ -18,7 +18,7 @@ import messageReducer from "./reducers/messageReducer";
 const persistConfig = {
   key: "root",
   version: 1,
-  blacklist: ["user", "message"],
+  blacklist: ["user", "message", "chat", "contact"],
   storage,
 };
 
