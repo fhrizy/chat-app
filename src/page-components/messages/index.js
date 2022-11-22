@@ -12,7 +12,7 @@ import {
 } from "../../store/reducers/messageReducer";
 import { selectUser, selectAuthorize } from "../../store/reducers/userReducer";
 import moment from "moment";
-import socket from "../../components/auth/auth-socket";
+import socket, { socketOn } from "../../components/auth/auth-socket";
 import Input from "../../components/form/input";
 import Button from "../../components/form/button";
 import ScrollToBottom from "react-scroll-to-bottom";
@@ -43,6 +43,7 @@ function Messages() {
           roomId: roomId,
         });
         setLoading(false);
+        // await socket.emit("readBy");
         return;
       }
       if (response.error && response.payload.status === 500)

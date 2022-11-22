@@ -36,10 +36,8 @@ const chatSlice = createSlice({
     UPDATEROOMS: (state, action) => {
       const list = state.rooms;
       const data = action.payload.data;
-      console.log(list, data);
       let newMessage = list.filter((room) => room.id === data.id);
       if (newMessage.length !== 0) {
-        console.log("sudah ada");
         if (action.payload.name === data.name) {
           newMessage[0] = {
             id: data.id,
@@ -57,7 +55,6 @@ const chatSlice = createSlice({
         );
         state.rooms = newRooms;
       } else {
-        console.log("belum ada");
         state.rooms.push(data);
       }
     },
