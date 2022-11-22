@@ -29,6 +29,7 @@ function Chats(props) {
   const user = useSelector(selectUser);
   const authorize = useSelector(selectAuthorize);
   const rooms = useSelector(selectRooms);
+  const idUser = localStorage.getItem("id");
 
   const [loading, setLoading] = useState(true);
 
@@ -69,7 +70,11 @@ function Chats(props) {
 
     const socketData = async () => {
       await socketOn("update-room", (data) => {
-        if (mounted) dispatch(UPDATEROOMS({ name: user.name, data }));
+        if (mounted) {
+          if (data?.members.includes(idUser)) {
+            dispatch(UPDATEROOMS({ name: user.name, data }));
+          }
+        }
       });
     };
     socketData();

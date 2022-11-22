@@ -31,7 +31,7 @@ function Input(props) {
         value={props.value}
         autoFocus={props.autoFocus}
         onKeyPress={(event) => {
-          event.key === "Enter" && props.onEnterKey();
+          event.key === props.keyPress && props.onEnterKey();
         }}
         disabled={props.disabled}
       />
