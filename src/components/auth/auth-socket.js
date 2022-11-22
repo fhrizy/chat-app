@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 
 const socket = new io.connect(
-  `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}`
+  `${process.env.REACT_APP_HOST}`
 );
 
 export const socketEmit = (event, data) => {

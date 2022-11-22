@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api`;
+axios.defaults.baseURL = `${process.env.REACT_APP_HOST}/api`;
 
 export const http_get = (url, auth = false, params = {}) => {
   if (auth)
