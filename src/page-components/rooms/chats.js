@@ -99,7 +99,7 @@ function Chats(props) {
     }
   };
 
-  const sortedRooms = rooms.slice().sort((a, b) => {
+  const sortedRooms = rooms?.slice()?.sort((a, b) => {
     if (a.lastMessage === b.lastMessage) {
       return 0;
     }
