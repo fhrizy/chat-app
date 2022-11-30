@@ -4,12 +4,12 @@ import { ToastContainer } from "./components/helper";
 import Dashboard from "./pages";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
-import "./components/styles/index.scss";
+// import "./components/styles/index.scss";
 
 function App() {
   return (
     <>
-      <div className="app">
+      <div className="flex w-screen h-screen bg-slate-200">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/signin" element={<Signin />} />
