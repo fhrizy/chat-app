@@ -12,7 +12,7 @@ import {
 } from "../../store/reducers/messageReducer";
 import { selectUser, selectAuthorize } from "../../store/reducers/userReducer";
 import moment from "moment";
-import socket, { socketOn } from "../../components/auth/auth-socket";
+import { socketOn, socketEmit } from "../../components/auth/auth-socket";
 import Input from "../../components/form/input";
 import Button from "../../components/form/button";
 import ScrollToBottom from "react-scroll-to-bottom";
@@ -39,11 +39,11 @@ function Messages() {
       setLoading(true);
       const response = await dispatch(getMessages({ roomId }));
       if (mounted && !response.error) {
-        await socket.emit("join-room", {
+        await socketEmit("join-room", {
           roomId: roomId,
         });
         setLoading(false);
-        // await socket.emit("readBy");
+        // await socketEmit("readBy");
         return;
       }
       if (response.error && response.payload.status === 500)
@@ -66,7 +66,7 @@ function Messages() {
     let mounted = true;
 
     const socketData = async () => {
-      await socket.on("receive-message", (data) => {
+      await socketOn("receive-message", (data) => {
         if (mounted) {
           dispatch(UPDATEMESSAGE(data));
         }
@@ -82,7 +82,7 @@ function Messages() {
 
   const sendMessage = async () => {
     if (message !== "") {
-      await socket.emit("send-message", {
+      await socketEmit("send-message", {
         message: message,
         timeSend: new Date(),
       });
@@ -131,12 +131,12 @@ function Messages() {
   };
 
   return (
-    <div className="content bg-light flex flex-center flex-column space-between">
+    <div className="content bg-light flex flex-col justify-between">
       <div className="section-header">
         <span className="text-white ml-2">{name}</span>
       </div>
       {!roomId && !loading && (
-        <img style={{ height: "50%" }} alt="Not Found" src={chatEmpty} />
+        <img style={{ height: "50%", width: "50%", margin: "auto" }} alt="Not Found" src={chatEmpty} />
       )}
       <BeatLoader
         loading={loading}
@@ -189,10 +189,10 @@ function Messages() {
           ))}
         </ScrollToBottom>
       )}
-      <div className="flex flex-center bg-white py-1 w-100">
+      <div className="flex flex-row justify-center bg-white pt-2 pb-1 w-full">
         <Input
           disabled={!roomId}
-          className="border-primary rounded-left-2 ml-2 pl-2 py-1"
+          className="block h-[34px] w-full pl-3 pr-2 rounded-l-lg border border-secondary focus:outline-none focus:ring-primary-1 focus:border-primary-1 sm:text-sm"
           type="text"
           style={{ width: "90%" }}
           placeholder="Message"
@@ -203,12 +203,12 @@ function Messages() {
         />
         <Button
           disabled={!roomId}
-          className="border-primary rounded-right-2 p-1 mr-2"
+          className="border border-secondary rounded-r-lg p-1 mr-2 w-[5%]"
           onClick={sendMessage}
         >
           <FontAwesomeIcon
             icon={faPaperPlane}
-            className="text-primary mx-1"
+            className="text-primary-1 mx-1"
             size="sm"
           />
         </Button>

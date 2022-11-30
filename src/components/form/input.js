@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/index.scss";
 
 function Input(props) {
   if (!props.label)
@@ -20,8 +19,8 @@ function Input(props) {
     );
 
   return (
-    <div className="flex flex-column gap-1">
-      <label>{props.label}</label>
+    <div className="flex flex-col gap-1">
+      <label className="block text-base font-medium text-gray-700">{props.label}</label>
       <input
         className={props.className}
         style={props.style}

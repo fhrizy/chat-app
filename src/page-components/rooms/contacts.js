@@ -134,7 +134,7 @@ function Contacts(props) {
         >
           <FontAwesomeIcon
             icon={faXmark}
-            className="text-white mx-1 my-sm"
+            className="text-white mx-2 my-1"
             size="xl"
           />
         </div>
@@ -154,10 +154,10 @@ function Contacts(props) {
       />
       {!group && (
         <div
-          className="w-100 row-hover-white border-bottom pointer"
+          className="w-full flex flex-row bg-white border-b-2 border-b-light hover:bg-light py-1 px-3 cursor-pointer"
           onClick={() => setGroup(true)}
         >
-          <div className="col-2">
+          <div className="w-2/12">
             <FontAwesomeIcon
               icon={faUserGroup}
               className="my-2 ml-2"
@@ -165,14 +165,14 @@ function Contacts(props) {
             />
             <FontAwesomeIcon icon={faPlus} className="my-2" size="xs" />
           </div>
-          <div className="col-10 my-2">
+          <div className="w-10/12 my-2">
             <span className="text-dark">Create Group</span>
           </div>
         </div>
       )}
-      <div className="bg-white border-bottom">
+      <div className="flex bg-white border-b-2 border-b-light p-2 justify-center">
         <Input
-          className="border-primary rounded m-2 pl-2 py-1"
+          className="block h-[34px] w-10/12 pl-3 pr-2 rounded-md border border-secondary focus:outline-none focus:ring-primary-1 focus:border-primary-1 sm:text-sm"
           style={{ width: "90%" }}
           type="text"
           placeholder="Type username to search or add new contact"
@@ -188,43 +188,42 @@ function Contacts(props) {
         )
         .map((contact, index) => (
           <div
-            className="row-hover-white py-1 border-bottom pointer"
+            className="flex flex-row py-1 border-b-2 border-b-light cursor-pointer bg-white hover:bg-light"
             key={index}
             onClick={() => props.createRoom(contact.id, contact.name)}
           >
-            <div className="col-2"></div>
-            <div className="col-10 flex flex-column gap-1">
+            <div className="w-2/12"></div>
+            <div className="w-10/12 flex flex-col gap-1">
               <span>{contact.name}</span>
               <span>{contact.username}</span>
             </div>
           </div>
         ))}
       {username.length > 0 && (
-        <div className="text-muted my-2 flex flex-column flex-center gap-1">
+        <div className="text-muted my-2 flex flex-col items-center gap-1">
           <span>No contact found?</span>
           <span>Looking for "{username}"?</span>
           <Button
-            className="border-transparent bg-white rounded-2 p-1"
+            className="border-transparent bg-white rounded-md p-1"
             type="submit"
             onClick={findDataUser}
           >{`Find ${username}`}</Button>
         </div>
       )}
       {modal && (
-        <div className="bg-white rounded-2">
-          <div className="flex flex-column flex-center py-1 gap-1">
+        <div className="w-10/12 bg-white rounded-md m-auto">
+          <div className="flex flex-col items-center py-1 gap-1">
             {dataTarget && (
               <>
-                <div>{dataTarget.username}</div>
                 <span>{dataTarget.name}</span>
                 <span>{dataTarget.username}</span>
               </>
             )}
           </div>
           {dataTarget && (
-            <div className="flex flex-center">
+            <div className="w-full flex justify-center">
               <Button
-                className="border-transparent bg-light rounded-2 my-2 p-1"
+                className="border-transparent bg-light rounded-md my-2 p-1"
                 type="submit"
                 onClick={() => addNewContact(dataTarget)}
               >

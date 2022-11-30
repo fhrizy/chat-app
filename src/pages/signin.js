@@ -36,46 +36,54 @@ function Signin() {
   };
 
   return (
-    <div className="float-form">
-      <div className="main-form">
-        <div className="side-background">background</div>
-        <div className="form px-4">
-          <form onSubmit={handleSubmit} className="w-100 gap-1 mb-3">
-            <Input
-              className="input-form border-primary rounded"
-              type="text"
-              placeholder="Username"
-              label="Username"
-              onChange={(e) => setUsername(e)}
-              autoFocus={true}
-            />
-            <Input
-              className="input-form border-primary rounded"
-              type="password"
-              placeholder="Password"
-              label="Password"
-              onChange={(e) => setPassword(e)}
-              autoFocus={false}
-            />
-            <Input
-              className="input-form border-primary rounded mb-1"
-              type="text"
-              placeholder="Role"
-              label="Role"
-              onChange={(e) => setRole(e)}
-              autoFocus={false}
-            />
-            <Button
-              className="bg-primary border-transparent text-white rounded px-4 py-1"
-              type="submit"
-            >
-              Login
-            </Button>
-          </form>
-          <span>
-            Belum memiliki akun? <a href="/signup">Register</a>
-          </span>
-        </div>
+    <div className="flex flex-row h-3/4 w-3/5 m-auto">
+      <div className={`bg-sign w-2/4`}></div>
+      <div className="w-2/4 flex flex-col gap-2 justify-center items-center bg-white">
+        <span className="text-xl antialiased mb-10">Sign-in</span>
+        <form
+          onSubmit={handleSubmit}
+          className="w-3/5 flex flex-col gap-2.5 mb-3"
+        >
+          <Input
+            className="block h-8 w-full pl-3 pr-2 rounded-md border border-gray-300 focus:outline-none focus:ring-primary-1 focus:border-primary-1 sm:text-sm"
+            type="text"
+            placeholder="budi123"
+            label="username"
+            onChange={(e) => setUsername(e)}
+            autoFocus={true}
+          />
+          <Input
+            className="block h-8 w-full pl-3 pr-2 rounded-md border border-gray-300 focus:outline-none focus:ring-primary-1 focus:border-primary-1 sm:text-sm"
+            type="password"
+            placeholder="k1o2d%<$@><6,."
+            label="password"
+            onChange={(e) => setPassword(e)}
+            autoFocus={false}
+          />
+          <Input
+            className="block h-8 w-full pl-3 pr-2 rounded-md border border-gray-300 focus:outline-none focus:ring-primary-1 focus:border-primary-1 sm:text-sm"
+            type="text"
+            placeholder="admin or user"
+            label="role"
+            onChange={(e) => setRole(e)}
+            autoFocus={false}
+          />
+          <Button
+            className="self-end bg-primary-1 border-transparent text-white rounded px-4 py-1 mt-4"
+            type="submit"
+          >
+            Login
+          </Button>
+        </form>
+        <span>
+          Belum memiliki akun?{" "}
+          <a
+            href="/signup"
+            className="text-secondary hover:text-primary-1 hover:decoration-primary-1 hover:underline"
+          >
+            Register
+          </a>
+        </span>
       </div>
     </div>
   );

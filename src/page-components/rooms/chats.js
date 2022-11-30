@@ -95,7 +95,7 @@ function Chats(props) {
     } else if (nowDay - dateDay === 1) {
       return "Kemarin";
     } else {
-      return moment(time).format("DD-mm-yyyy");
+      return moment(time).format("DD-MM-YYYY");
     }
   };
 
@@ -129,37 +129,28 @@ function Chats(props) {
         Leave Group
       </button>
     );
-    return [
-      <button
-        className="button-light text-left py-1 pl-1 pr-2"
-        onClick={() => selected(0, roomId)}
-      >
-        <FontAwesomeIcon icon={faThumbTack} className="mr-1 text-muted" />
-        Pin
-      </button>,
-      <button
-        className="button-light text-left py-1 pl-1 pr-2"
-        onClick={() => selected(1, roomId)}
-      >
-        <FontAwesomeIcon icon={faTrash} className="mr-1 text-muted" />
-        Delete
-      </button>,
-      <button
-        className="button-light text-left py-1 pl-1 pr-2"
-        onClick={() => selected(2, roomId)}
-      >
-        <FontAwesomeIcon icon={faVolumeXmark} className="mr-1 text-muted" />
-        Mute
-      </button>,
-      <button
-        className="button-light text-left py-1 pl-1 pr-2"
-        onClick={() => selected(3, roomId)}
-      >
-        <FontAwesomeIcon icon={faBan} className="mr-1 text-muted" />
-        Block
-      </button>,
-      propGroup,
+
+    const propsButton = [
+      { id: 0, icon: faThumbTack, text: "Pin" },
+      { id: 1, icon: faTrash, text: "Delete" },
+      { id: 2, icon: faVolumeXmark, text: "Mute" },
+      { id: 3, icon: faBan, text: "Block" },
     ];
+
+    let buttonList = propsButton.map((item) => {
+      return (
+        <button
+          key={item.id}
+          className="button-light text-left py-1 pl-1 pr-2"
+          onClick={() => selected(item.id, roomId)}
+        >
+          <FontAwesomeIcon icon={item.icon} className="mr-2 text-primary-1" />
+          {item.text}
+        </button>
+      );
+    });
+
+    return [...buttonList, propGroup];
   };
 
   const selected = async (key, roomId) => {
@@ -187,7 +178,7 @@ function Chats(props) {
         >
           <FontAwesomeIcon
             icon={faMessage}
-            className="text-white m-1"
+            className="text-white m-2"
             size="lg"
           />
         </div>
@@ -197,11 +188,11 @@ function Chats(props) {
           chat.lastMessage !== null && (
             <div className="relative" key={index}>
               <div
-                className="row-hover-white py-1 border-bottom pointer"
+                className="flex flex-row bg-white hover:bg-light py-1 px-3 border-b-2 border-b-light cursor-pointer"
                 onClick={() => props.joinRoom(chat.id, chat.name)}
               >
-                <div className="col-2"></div>
-                <div className="col-8 flex flex-column gap-1">
+                <div className="w-2/12"></div>
+                <div className="w-8/12 flex flex-col gap-1">
                   <span>{chat.name}</span>
                   <span
                     className="text-nowrap"
@@ -210,14 +201,14 @@ function Chats(props) {
                     {chat.lastMessage.message}
                   </span>
                 </div>
-                <div className="col-2 text-right">
+                <div className="w-2/12 text-right">
                   <span className="mr-1" style={{ fontSize: "12px" }}>
                     {filterTime(chat.lastMessage.timeReceived)}
                   </span>
                 </div>
               </div>
               <div
-                className="absolute flex flex-row gap-1 flex-center mb-1 mr-1"
+                className="absolute flex flex-row gap-1 items-center mb-1 mr-3"
                 style={{ right: 0, bottom: 0 }}
               >
                 {/* <FontAwesomeIcon
@@ -245,7 +236,7 @@ function Chats(props) {
                 </div> */}
                 <DropdownButton list={listMenu(chat.type, chat.id)}>
                   <FontAwesomeIcon
-                    className="text-muted pointer"
+                    className="text-primary-1 cursor-pointer"
                     icon={faCaretDown}
                     size="lg"
                   />
