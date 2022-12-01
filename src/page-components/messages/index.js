@@ -140,7 +140,7 @@ function Messages() {
       <div className="section-header">
         <span className="text-white ml-2">{name}</span>
         <div
-          className="circle-hover mr-1"
+          className="x-mark-message circle-hover mr-1"
           onClick={() => closeMessage()}
         >
           <FontAwesomeIcon
@@ -207,9 +207,8 @@ function Messages() {
       <div className="flex flex-row justify-center bg-white pt-2 pb-1 w-full">
         <Input
           disabled={!roomId}
-          className="block h-[34px] w-full pl-3 pr-2 rounded-l-lg border border-secondary focus:outline-none focus:ring-primary-1 focus:border-primary-1 sm:text-sm"
+          className="block h-[34px] w-[90%] max-[900px]:w-[85%] max-xl:w-[85%] pl-3 pr-2 rounded-l-lg border border-secondary focus:outline-none focus:ring-primary-1 focus:border-primary-1 sm:text-sm"
           type="text"
-          style={{ width: "90%" }}
           placeholder="Message"
           onChange={(e) => setMessage(e)}
           value={message}
@@ -218,7 +217,7 @@ function Messages() {
         />
         <Button
           disabled={!roomId}
-          className="border border-secondary rounded-r-lg p-1 mr-2 w-[5%]"
+          className="border border-secondary rounded-r-lg p-1 mr-2 w-[5%] max-[900px]:w-[10%] max-xl:w-[10%]"
           onClick={sendMessage}
         >
           <FontAwesomeIcon
