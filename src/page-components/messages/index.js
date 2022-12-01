@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { BeatLoader } from "react-spinners";
 import { toastNotify } from "../../components/helper";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectMessages,
@@ -30,6 +30,7 @@ function Messages() {
   const query = new URLSearchParams(location);
   const roomId = query.get("roomId") || "";
   const name = query.get("name") || "Message";
+  const navigate = useNavigate();
   let section = [];
 
   useEffect(() => {
@@ -130,10 +131,24 @@ function Messages() {
     }
   };
 
+  const closeMessage = () => {
+    navigate("/");
+  }
+
   return (
-    <div className="content bg-light flex flex-col justify-between">
+    <div className={`message bg-light flex flex-col justify-between ${roomId && "active"}`}>
       <div className="section-header">
         <span className="text-white ml-2">{name}</span>
+        <div
+          className="circle-hover mr-1"
+          onClick={() => closeMessage()}
+        >
+          <FontAwesomeIcon
+            icon={faXmark}
+            className="text-white mx-2 my-1"
+            size="xl"
+          />
+        </div>
       </div>
       {!roomId && !loading && (
         <img style={{ height: "50%", width: "50%", margin: "auto" }} alt="Not Found" src={chatEmpty} />
@@ -149,7 +164,7 @@ function Messages() {
       />
       {roomId && !loading && (
         <ScrollToBottom
-          className="message-room w-100 flex flex-column"
+          className="message-room w-full flex flex-col"
           ScrollBehavior="smooth"
         >
           {messages.map((message, index) => (

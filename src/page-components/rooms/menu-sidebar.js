@@ -17,7 +17,7 @@ function MenuSidebar() {
     navigate("/signin");
   };
   return (
-    <div className="menu flex flex-col justify-around items-center">
+    <div className="menu-sidebar">
       <div className="menu-item">
         <span>{user.name && user.name.charAt(0).toUpperCase()}</span>
         <span className="floating-detail">{user.name}</span>

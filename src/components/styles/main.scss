@@ -1,34 +1,15 @@
 @import "./variables.scss";
 
-.bg-sign {
-  background-image: url("../../assets/images/background-sign.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.content-sidebar {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  .menu {
-    width: 50px;
-    height: 210px;
-    left: -40px;
-    opacity: 0.4;
-    z-index: 5;
-    position: absolute;
-    border-radius: 0 10px 10px 0;
-    background-color: $primary-2;
-    cursor: pointer;
-    &:hover {
-      left: 0;
-      opacity: 1;
-    }
+@media not all and (max-width: 1024px) {
+  .content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
+
   .slide-room {
     width: 35%;
     height: 100%;
@@ -42,69 +23,48 @@
       border-right: 1px solid $white;
     }
   }
+
   .sidebar {
     width: 35%;
     height: 100%;
     border-right: 1px solid $white;
-  }
-  .content {
-    width: 65%;
-    height: 100%;
+    transition: all 0.3s ease-in-out;
   }
 }
 
-.message-room {
-  height: calc(100% - 100px);
-  scroll-behavior: smooth;
-  overflow: auto;
-}
-
-.message-bubble-right {
+@mixin buuble-chat($flex, $bcolor, $tcolor, $border) {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: $flex;
   .message-bubble-content {
     width: fit-content;
     max-width: 60%;
     padding: 10px;
-    background-color: $primary-2;
-    border-radius: 10px 10px 0 10px;
-    color: $white;
-    word-break: break-all;
-  }
-}
-.message-bubble-left {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  .message-bubble-content {
-    width: fit-content;
-    max-width: 60%;
-    padding: 10px;
-    background-color: $white;
-    border-radius: 10px 10px 10px 0;
+    background-color: $bcolor;
+    border-radius: $border;
+    color: $tcolor;
     word-break: break-all;
   }
 }
 
-.section-header {
-  width: 100%;
-  height: 50px;
+.menu-sidebar {
+  width: 50px;
+  height: 210px;
+  left: -30px;
+  opacity: 0.4;
+  z-index: 5;
   display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: space-between;
-  background-color: $primary-2;
-}
-
-.circle-hover {
-  width: fit-content;
-  height: fit-content;
-  border-radius: 100px;
-  background-color: transparent;
+  position: absolute;
+  border-radius: 0 10px 10px 0;
+  background-color: $secondary;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
   &:hover {
-    background-color: #cfcfcf65;
+    left: 0;
+    opacity: 1;
   }
 }
 
@@ -119,7 +79,7 @@
     white-space: nowrap;
     padding: 5px;
     border-radius: 0 5px 5px 0;
-    background-color: $primary-2;
+    background-color: $secondary;
     color: $white;
     font-size: 12px;
     position: absolute;
@@ -145,6 +105,52 @@
     font-size: 28px;
     font-weight: bold;
     color: $white;
+  }
+}
+
+.bg-sign {
+  background-image: url("../../assets/images/background-sign.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.message {
+  width: 65%;
+  height: 100%;
+}
+
+.message-room {
+  height: calc(100% - 100px);
+  scroll-behavior: smooth;
+  overflow: auto;
+}
+
+.message-bubble-right {
+  @include buuble-chat(flex-end, $primary-2, $white, 10px 10px 0 10px);
+}
+.message-bubble-left {
+  @include buuble-chat(flex-start, $white, black, 10px 10px 10px 0);
+}
+
+.section-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $secondary;
+}
+
+.circle-hover {
+  width: fit-content;
+  height: fit-content;
+  border-radius: 100px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: #cfcfcf65;
   }
 }
 

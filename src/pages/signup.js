@@ -35,9 +35,9 @@ function Signup() {
   };
 
   return (
-    <div className="flex flex-row h-3/4 w-3/5 m-auto">
-      <div className="bg-sign w-2/4"></div>
-      <div className="w-2/4 flex flex-col gap-2 justify-center items-center bg-white">
+    <div className="flex flex-row min-h-[550px] h-3/4 w-3/5 m-auto">
+      <div className="bg-sign block max-lg:hidden w-2/4"></div>
+      <div className="w-2/4 max-lg:w-full max-lg:min-w-[350px] flex flex-col gap-2 justify-center items-center bg-white">
         <span className="text-xl antialiased">Sign-up</span>
         <form
           onSubmit={handleSubmit}

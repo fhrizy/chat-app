@@ -144,7 +144,7 @@ function Chats(props) {
           className="button-light text-left py-1 pl-1 pr-2"
           onClick={() => selected(item.id, roomId)}
         >
-          <FontAwesomeIcon icon={item.icon} className="mr-2 text-primary-1" />
+          <FontAwesomeIcon icon={item.icon} className="mr-2 text-primary-2" />
           {item.text}
         </button>
       );
@@ -236,7 +236,7 @@ function Chats(props) {
                 </div> */}
                 <DropdownButton list={listMenu(chat.type, chat.id)}>
                   <FontAwesomeIcon
-                    className="text-primary-1 cursor-pointer"
+                    className="text-primary-2 cursor-pointer"
                     icon={faCaretDown}
                     size="lg"
                   />
