@@ -132,7 +132,7 @@ function Messages() {
   };
 
   const closeMessage = () => {
-    navigate("/");
+    navigate({ search: `` });
   }
 
   return (
