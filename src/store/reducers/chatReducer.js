@@ -66,7 +66,7 @@ const chatSlice = createSlice({
       })
       .addCase(actionRoom.fulfilled, (state, action) => {
         state.rooms = state.rooms.filter(
-          (room) => room.id !== action.payload.data
+          (room) => room.id !== action.meta.arg.roomId
         );
       });
   },
