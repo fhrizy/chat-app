@@ -3,13 +3,22 @@ import { BeatLoader } from "react-spinners";
 import { toastNotify } from "../../components/helper";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faEllipsisH,
+  faPaperPlane,
+  faSquareCheck,
+  faTrash,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectMessages,
   getMessages,
+  actionMessage,
   UPDATEMESSAGE,
 } from "../../store/reducers/messageReducer";
+import { UPDATELASTMESSAGE } from "../../store/reducers/chatReducer";
 import { selectUser, selectAuthorize } from "../../store/reducers/userReducer";
 import moment from "moment";
 import { socketOn, socketEmit } from "../../components/auth/auth-socket";
@@ -17,6 +26,7 @@ import Input from "../../components/form/input";
 import Button from "../../components/form/button";
 import ScrollToBottom from "react-scroll-to-bottom";
 import chatEmpty from "../../assets/images/chat-empty.png";
+import DropdownButton from "../../components/form/dropdown";
 
 function Messages() {
   const user = useSelector(selectUser);
@@ -24,6 +34,8 @@ function Messages() {
   const messages = useSelector(selectMessages);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checkMessage, setCheckMessage] = useState(false);
+  const [checkedId, setCheckedId] = useState([]);
 
   const dispatch = useDispatch();
   const location = useLocation().search;
@@ -32,6 +44,20 @@ function Messages() {
   const name = query.get("name") || "Message";
   const navigate = useNavigate();
   let section = [];
+
+  useEffect(() => {
+    setCheckMessage(false);
+    setCheckedId([]);
+  }, [roomId]);
+
+  useEffect(() => {
+    if (checkedId?.length > 0) {
+      dispatch(
+        UPDATELASTMESSAGE({ roomId, ...messages[messages?.length - 1] })
+      );
+      setCheckedId([]);
+    }
+  }, [messages]);
 
   useEffect(() => {
     let mounted = true;
@@ -133,25 +159,117 @@ function Messages() {
 
   const closeMessage = () => {
     navigate({ search: `` });
-  }
+  };
+
+  const listMenu = [
+    <button
+      className="button-light text-left py-1 pl-1 pr-2"
+      onClick={() => setCheckMessage(true)}
+    >
+      <FontAwesomeIcon icon={faSquareCheck} className="mr-2 text-primary-2" />
+      Select Message
+    </button>,
+  ];
+
+  const checked = (e, id) => {
+    if (e) setCheckedId((prev) => [...prev, id]);
+    if (!e) setCheckedId((prev) => prev.filter((item) => item !== id));
+  };
+
+  const Checkbox = ({ id }) => {
+    return (
+      <div className="flex items-center mb-3 mx-1">
+        {checkMessage && (
+          <input
+            checked={checkedId.includes(id)}
+            type="checkbox"
+            onChange={(e) => checked(e.target.checked, id)}
+            className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+        )}
+      </div>
+    );
+  };
+
+  const actionsMessage = async (key) => {
+    const response = await dispatch(
+      actionMessage({ key, messageId: checkedId })
+    );
+    if (!response.error) {
+      setCheckMessage(false);
+      return toastNotify("Message deleted successfully", "success");
+    }
+    if (response.error && response.payload.status === 500)
+      return toastNotify("Internal Server Error", "error");
+
+    return toastNotify(response.payload.data.message, "warning");
+  };
 
   return (
-    <div className={`message bg-light flex flex-col justify-between ${roomId && "active"}`}>
-      <div className="section-header">
-        <span className="text-white ml-2">{name}</span>
-        <div
-          className="x-mark-message circle-hover mr-1"
-          onClick={() => closeMessage()}
-        >
-          <FontAwesomeIcon
-            icon={faXmark}
-            className="text-white mx-2 my-1"
-            size="xl"
-          />
+    <div
+      className={`message bg-light flex flex-col justify-between ${
+        roomId && "active"
+      }`}
+    >
+      <div className="header">
+        <div className="flex flex-row">
+          <div
+            className="x-mark-message circle-hover mr-1"
+            onClick={() => closeMessage()}
+          >
+            <FontAwesomeIcon
+              icon={faArrowLeft}
+              className="text-white mx-2 my-1"
+              size="xl"
+            />
+          </div>
+          {name !== "Message" && (
+            <div className="profile ml-2">
+              <span>{name && name.charAt(0).toUpperCase()}</span>
+            </div>
+          )}
+          <span className="text-white text-xl ml-5">{name}</span>
         </div>
+        {checkMessage && (
+          <div className="items">
+            {checkedId.length > 0 && (
+              <div className="item mr-1" onClick={() => actionsMessage(0)}>
+                <FontAwesomeIcon
+                  className="text-white mx-2 my-1"
+                  icon={faTrash}
+                  size="lg"
+                />
+              </div>
+            )}
+            <div className="item mr-1" onClick={() => setCheckMessage(false)}>
+              <FontAwesomeIcon
+                className="text-white mx-2 my-1"
+                icon={faXmark}
+                size="xl"
+              />
+            </div>
+          </div>
+        )}
+        {!checkMessage && (
+          <div className="items">
+            <DropdownButton list={listMenu}>
+              <div className="item mr-1">
+                <FontAwesomeIcon
+                  className="text-white m-1"
+                  icon={faEllipsisH}
+                  size="xl"
+                />
+              </div>
+            </DropdownButton>
+          </div>
+        )}
       </div>
       {!roomId && !loading && (
-        <img style={{ height: "50%", width: "50%", margin: "auto" }} alt="Not Found" src={chatEmpty} />
+        <img
+          style={{ height: "50%", width: "50%", margin: "auto" }}
+          alt="Not Found"
+          src={chatEmpty}
+        />
       )}
       <BeatLoader
         loading={loading}
@@ -184,21 +302,32 @@ function Messages() {
                 )}
               </div>
               <div
-                className={`message-bubble-${
-                  message.from === user.id ? `right` : `left`
-                } m-1`}
+                className={`flex flex-row items-center justify-${
+                  message.from === user.id ? "end" : "start"
+                }`}
               >
-                <div className="message-bubble-content">
-                  {message.messageContent.message}
-                </div>
+                {message.from !== user.id && <Checkbox id={message._id} />}
                 <div
-                  className="message-bubble-meta"
-                  style={{
-                    fontSize: "12px",
-                  }}
+                  className={`message-bubble-${
+                    message.from === user.id ? `right` : `left`
+                  } m-1 w-full`}
                 >
-                  {moment(message.messageContent.timeReceived).format("HH:mm")}
+                  <div className="message-bubble-content">
+                    {message.messageContent.message}
+                  </div>
+
+                  <div
+                    className="message-bubble-meta"
+                    style={{
+                      fontSize: "12px",
+                    }}
+                  >
+                    {moment(message.messageContent.timeReceived).format(
+                      "HH:mm"
+                    )}
+                  </div>
                 </div>
+                {message.from === user.id && <Checkbox id={message._id} />}
               </div>
             </div>
           ))}

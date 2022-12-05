@@ -1,0 +1,31 @@
+@import "./variables.scss";
+
+// text variants
+.text-nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: 10%;
+}
+
+// button variants
+.button-light {
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  background-color: $white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: $light;
+  }
+}
+
+// background variants
+.bg-sign {
+  background-image: url("../../assets/images/background-sign.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

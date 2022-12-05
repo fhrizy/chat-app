@@ -60,8 +60,8 @@ function Dashboard() {
   };
 
   return (
-    <div className="content">
-      <MenuSidebar />
+    <div className="content-row">
+      {/* <MenuSidebar /> */}
       <Chats joinRoom={joinRoom} setOpenContact={setOpenContact} />
       <Contacts
         openContact={openContact}
