@@ -1,4 +1,7 @@
+@import "./variables.scss";
+
 @media not all and (min-width: 1024px) {
+  // from main.scss
   .content {
     width: 100%;
     height: 100%;
@@ -50,6 +53,7 @@
     background-color: $secondary;
   }
 
+  // from components.scss
   .x-mark-message {
     display: block;
   }

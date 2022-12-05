@@ -9,7 +9,7 @@ import Signup from "./pages/signup";
 function App() {
   return (
     <>
-      <div className="flex w-screen h-screen relative bg-secondary">
+      <div className="flex w-screen h-screen relative bg-light">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/signin" element={<Signin />} />

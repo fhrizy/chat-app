@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { http_get } from "../../components/helper/axios";
+import { http_get, http_post } from "../../components/helper/axios";
 
 const state = {
   messages: [],
@@ -11,6 +11,19 @@ export const getMessages = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       return await http_get(`/get-messages`, true, data);
+    } catch (error) {
+      return rejectWithValue(error.response);
+    }
+  }
+);
+
+export const actionMessage = createAsyncThunk(
+  "message/action-message",
+  async (data, { rejectWithValue }) => {
+    try {
+      return await http_post(`/action-message/${data.key}`, true, {
+        messageId: data.messageId,
+      });
     } catch (error) {
       return rejectWithValue(error.response);
     }
@@ -29,9 +42,19 @@ const messageSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getMessages.fulfilled, (state, action) => {
-      state.messages = action.payload.data;
-    });
+    builder
+      .addCase(getMessages.fulfilled, (state, action) => {
+        state.messages = action.payload.data;
+      })
+      .addCase(actionMessage.fulfilled, (state, action) => {
+        if (action.meta.arg.key === 0) {
+          const message = state.messages.filter(
+            (message) =>
+              !action.meta.arg.messageId.includes(String(message._id))
+          );
+          state.messages = message;
+        }
+      });
   },
 });
 

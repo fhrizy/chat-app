@@ -53,6 +53,7 @@ export const store = configureStore({
           "user/signup/fulfilled",
           "user/auth/rejected",
           "chat/action-room/fulfilled",
+          "message/action-message/fulfilled",
         ],
         ignoredPaths: ["payload.config.adapter"],
       },

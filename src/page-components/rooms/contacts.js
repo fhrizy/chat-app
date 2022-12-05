@@ -125,18 +125,17 @@ function Contacts(props) {
   });
 
   return (
-    <div className={`slide-room ${props.openContact && "active"} bg-light`}>
-      <div className="section-header">
-        <span className="text-white ml-2">Contact</span>
-        <div
-          className="circle-hover mr-1"
-          onClick={() => props.setOpenContact(false)}
-        >
-          <FontAwesomeIcon
-            icon={faXmark}
-            className="text-white mx-2 my-1"
-            size="xl"
-          />
+    <div className={`slide-menu ${props.openContact && "active"} bg-light`}>
+      <div className="header">
+        <span className="text-white text-xl ml-2">Contact</span>
+        <div className="items">
+          <div className="item" onClick={() => props.setOpenContact(false)}>
+            <FontAwesomeIcon
+              icon={faXmark}
+              className="text-white mx-2 my-1"
+              size="xl"
+            />
+          </div>
         </div>
       </div>
       <BeatLoader
@@ -153,27 +152,19 @@ function Contacts(props) {
         }}
       />
       {!group && (
-        <div
-          className="w-full flex flex-row bg-white border-b-2 border-b-light hover:bg-light py-1 px-3 cursor-pointer"
-          onClick={() => setGroup(true)}
-        >
-          <div className="w-2/12">
-            <FontAwesomeIcon
-              icon={faUserGroup}
-              className="my-2 ml-2"
-              size="lg"
-            />
-            <FontAwesomeIcon icon={faPlus} className="my-2" size="xs" />
+        <div className="card-list px-6 py-3" onClick={() => setGroup(true)}>
+          <div className="w-[12%] flex flex-row items-center">
+            <FontAwesomeIcon icon={faUserGroup} size="lg" />
+            <FontAwesomeIcon icon={faPlus} size="xs" />
           </div>
-          <div className="w-10/12 my-2">
+          <div className="w-[88%] flex items-center">
             <span className="text-dark">Create Group</span>
           </div>
         </div>
       )}
-      <div className="flex bg-white border-b-2 border-b-light p-2 justify-center">
+      <div className="card-list px-6 py-3">
         <Input
-          className="block h-[34px] w-10/12 pl-3 pr-2 rounded-md border border-secondary focus:outline-none focus:ring-primary-1 focus:border-primary-1 sm:text-sm"
-          style={{ width: "90%" }}
+          className="block h-[34px] w-full pl-3 pr-2 rounded-md border border-secondary focus:outline-none focus:ring-primary-1 focus:border-primary-1 sm:text-sm"
           type="text"
           placeholder="Type username to search or add new contact"
           onChange={(e) => getUsername(e)}
@@ -188,12 +179,16 @@ function Contacts(props) {
         )
         .map((contact, index) => (
           <div
-            className="flex flex-row py-1 border-b-2 border-b-light cursor-pointer bg-white hover:bg-light"
+            className="card-list py-2 px-3 gap-2"
             key={index}
             onClick={() => props.createRoom(contact.id, contact.name)}
           >
-            <div className="w-2/12"></div>
-            <div className="w-10/12 flex flex-col gap-1">
+            <div className="w-[10%] flex justify-center items-center">
+              <div className="profile">
+                <span>{contact.name && contact.name.charAt(0).toUpperCase()}</span>
+              </div>
+            </div>
+            <div className="w-[90%] flex flex-col gap-1">
               <span>{contact.name}</span>
               <span>{contact.username}</span>
             </div>

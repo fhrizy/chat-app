@@ -10,6 +10,7 @@ import {
   faBan,
   faTrash,
   faRightFromBracket,
+  faEllipsisH,
 } from "@fortawesome/free-solid-svg-icons";
 import { BeatLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
@@ -169,18 +170,26 @@ function Chats(props) {
   };
 
   return (
-    <div className="sidebar bg-light">
-      <div className="section-header">
-        <span className="text-white ml-2">Chat</span>
-        <div
-          className="circle-hover mr-1"
-          onClick={() => props.setOpenContact(true)}
-        >
-          <FontAwesomeIcon
-            icon={faMessage}
-            className="text-white m-2"
-            size="lg"
-          />
+    <div className="sidebar">
+      <div className="header">
+        <div className="profile">
+          <span>{user.name && user.name.charAt(0).toUpperCase()}</span>
+        </div>
+        <div className="items">
+          <div className="item mr-1" onClick={() => props.setOpenContact(true)}>
+            <FontAwesomeIcon
+              icon={faMessage}
+              className="text-white m-2"
+              size="lg"
+            />
+          </div>
+          <div className="item mr-1" onClick={() => props.setOpenContact(true)}>
+            <FontAwesomeIcon
+              icon={faEllipsisH}
+              className="text-white m-1"
+              size="xl"
+            />
+          </div>
         </div>
       </div>
       {sortedRooms.map(
@@ -188,57 +197,68 @@ function Chats(props) {
           chat.lastMessage !== null && (
             <div className="relative" key={index}>
               <div
-                className="flex flex-row bg-white hover:bg-light py-1 px-3 border-b-2 border-b-light cursor-pointer"
+                className="card-list py-2 px-3 gap-1"
                 onClick={() => props.joinRoom(chat.id, chat.name)}
               >
-                <div className="w-2/12"></div>
-                <div className="w-8/12 flex flex-col gap-1">
-                  <span>{chat.name}</span>
-                  <span
-                    className="text-nowrap"
-                    style={{ maxWidth: "80%", minWidth: 50 }}
-                  >
-                    {chat.lastMessage.message}
-                  </span>
+                <div className="w-[10%] flex justify-center items-center">
+                  <div className="profile">
+                    <span>
+                      {chat.name && chat.name.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
                 </div>
-                <div className="w-2/12 text-right">
-                  <span className="mr-1" style={{ fontSize: "12px" }}>
-                    {filterTime(chat.lastMessage.timeReceived)}
-                  </span>
+                <div className="w-[90%] flex flex-col">
+                  <div className="flex flex-row justify-between items-center">
+                    <span>{chat.name}</span>
+                    <span style={{ fontSize: "12px" }}>
+                      {filterTime(chat.lastMessage.timeReceived)}
+                    </span>
+                  </div>
+                  <div className="flex flex-row justify-between items-center">
+                    <span
+                      className="text-nowrap"
+                      style={{ maxWidth: "80%", minWidth: 50 }}
+                    >
+                      {chat.lastMessage.message}
+                    </span>
+                    <div className="flex flex-row justify-between items-center gap-1">
+                      {/* <FontAwesomeIcon
+                        className="text-primary-1"
+                        icon={faThumbTack}
+                        size="md"
+                      />
+                      <FontAwesomeIcon
+                        className="text-primary-1"
+                        icon={faVolumeXmark}
+                        size="md"
+                      />
+                      <FontAwesomeIcon
+                        className="text-primary-1"
+                        icon={faBan}
+                        size="md"
+                      /> */}
+                      {/* <div
+                        className="bg-primary-2 rounded-full flex justify-center items-center"
+                        style={{ height: 18, width: 18 }}
+                      >
+                        <span className="text-white" style={{ fontSize: 12 }}>
+                          1
+                        </span>
+                      </div> */}
+                      <div style={{ height: 16, width: 16 }}></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div
-                className="absolute flex flex-row gap-1 items-center mb-1 mr-3"
+                className="absolute flex flex-row items-center mb-2 mr-3"
                 style={{ right: 0, bottom: 0 }}
               >
-                {/* <FontAwesomeIcon
-                  className="text-success"
-                  icon={faThumbTack}
-                  size="xs"
-                /> */}
-                {/* <FontAwesomeIcon
-                  className="text-danger"
-                  icon={faVolumeXmark}
-                  size="xs"
-                /> */}
-                {/* <FontAwesomeIcon
-                  className="text-danger"
-                  icon={faBan}
-                  size="xs"
-                /> */}
-                {/* <div
-                  className="bg-primary rounded flex flex-center"
-                  style={{ height: 20, width: 20 }}
-                >
-                  <span className="text-white" style={{ fontSize: 10 }}>
-                    1
-                  </span>
-                </div> */}
                 <DropdownButton list={listMenu(chat.type, chat.id)}>
                   <FontAwesomeIcon
-                    className="text-primary-2 cursor-pointer"
+                    className="text-primary-1 cursor-pointer"
                     icon={faCaretDown}
-                    size="lg"
+                    size="xl"
                   />
                 </DropdownButton>
               </div>

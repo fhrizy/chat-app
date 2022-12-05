@@ -58,6 +58,13 @@ const chatSlice = createSlice({
         state.rooms.push(data);
       }
     },
+    UPDATELASTMESSAGE: (state, action) => {
+      const list = state.rooms;
+      const data = action.payload;
+      const index = list.findIndex((room) => room.id === data.roomId);
+      list[index].lastMessage = data.messageContent;
+      state.rooms = list;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -72,7 +79,7 @@ const chatSlice = createSlice({
   },
 });
 
-export const { UPDATEROOMS } = chatSlice.actions;
+export const { UPDATEROOMS, UPDATELASTMESSAGE } = chatSlice.actions;
 export const selectRooms = (state) => state.chat.rooms;
 
 export default chatSlice.reducer;
