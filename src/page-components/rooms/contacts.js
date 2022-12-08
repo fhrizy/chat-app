@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faXmark,
+  faArrowLeft,
   faUserGroup,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
@@ -125,17 +125,19 @@ function Contacts(props) {
   });
 
   return (
-    <div className={`slide-menu ${props.openContact && "active"} bg-light`}>
+    <div className={`slide-menu ${props.openContact && "active"} bg-white`}>
       <div className="header">
-        <span className="text-white text-xl ml-2">Contact</span>
-        <div className="items">
-          <div className="item" onClick={() => props.setOpenContact(false)}>
-            <FontAwesomeIcon
-              icon={faXmark}
-              className="text-white mx-2 my-1"
-              size="xl"
-            />
+        <div className="flex flex-row items-center">
+          <div className="items">
+            <div className="item" onClick={() => props.setOpenContact(false)}>
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                className="text-white mx-1.5 my-1"
+                size="xl"
+              />
+            </div>
           </div>
+          <span className="text-white text-xl ml-2">Contact</span>
         </div>
       </div>
       <BeatLoader
@@ -185,7 +187,9 @@ function Contacts(props) {
           >
             <div className="w-[10%] flex justify-center items-center">
               <div className="profile">
-                <span>{contact.name && contact.name.charAt(0).toUpperCase()}</span>
+                <span>
+                  {contact.name && contact.name.charAt(0).toUpperCase()}
+                </span>
               </div>
             </div>
             <div className="w-[90%] flex flex-col gap-1">

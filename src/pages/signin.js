@@ -21,10 +21,6 @@ function Signin() {
     const response = await dispatch(signin(data));
 
     if (!response.error) {
-      localStorage.setItem(
-        "token",
-        JSON.stringify(response.payload.data.token)
-      );
       navigate("/");
       return;
     }
