@@ -138,3 +138,10 @@
 .x-mark-message {
   display: none;
 }
+
+.input-edit {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $gray;
+}

@@ -207,7 +207,7 @@ function Messages() {
 
   return (
     <div
-      className={`message bg-light flex flex-col justify-between ${
+      className={`message bg-gray flex flex-col justify-between ${
         roomId && "active"
       }`}
     >
@@ -219,11 +219,11 @@ function Messages() {
           >
             <FontAwesomeIcon
               icon={faArrowLeft}
-              className="text-white mx-2 my-1"
+              className="text-white mx-1.5 my-1"
               size="xl"
             />
           </div>
-          {name !== "Message" && (
+          {roomId && (
             <div className="profile ml-2">
               <span>{name && name.charAt(0).toUpperCase()}</span>
             </div>
@@ -235,7 +235,7 @@ function Messages() {
             {checkedId.length > 0 && (
               <div className="item mr-1" onClick={() => actionsMessage(0)}>
                 <FontAwesomeIcon
-                  className="text-white mx-2 my-1"
+                  className="text-white mx-2 my-1.5"
                   icon={faTrash}
                   size="lg"
                 />
@@ -250,12 +250,12 @@ function Messages() {
             </div>
           </div>
         )}
-        {!checkMessage && (
+        {!checkMessage && roomId && (
           <div className="items">
             <DropdownButton list={listMenu}>
               <div className="item mr-1">
                 <FontAwesomeIcon
-                  className="text-white m-1"
+                  className="text-white my-1 mx-1.5"
                   icon={faEllipsisH}
                   size="xl"
                 />

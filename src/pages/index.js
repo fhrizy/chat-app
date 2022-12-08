@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { socketEmit } from "../components/auth/auth-socket";
 import { useDispatch } from "react-redux";
 import { AUTHORIZE, auth } from "../store/reducers/userReducer";
-import MenuSidebar from "../page-components/rooms/menu-sidebar";
+import Profile from "../page-components/rooms/profile";
 import Chats from "../page-components/rooms/chats";
 import Contacts from "../page-components/rooms/contacts";
 import Messages from "../page-components/messages";
 
 function Dashboard() {
   const [openContact, setOpenContact] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -61,13 +62,17 @@ function Dashboard() {
 
   return (
     <div className="content-row">
-      {/* <MenuSidebar /> */}
-      <Chats joinRoom={joinRoom} setOpenContact={setOpenContact} />
+      <Chats
+        joinRoom={joinRoom}
+        setOpenContact={setOpenContact}
+        setOpenProfile={setOpenProfile}
+      />
       <Contacts
         openContact={openContact}
         setOpenContact={setOpenContact}
         createRoom={createRoom}
       />
+      <Profile openProfile={openProfile} setOpenProfile={setOpenProfile} />
       <Messages />
     </div>
   );

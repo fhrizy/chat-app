@@ -31,6 +31,7 @@ function Chats(props) {
   const authorize = useSelector(selectAuthorize);
   const rooms = useSelector(selectRooms);
   const idUser = localStorage.getItem("id");
+  const name = localStorage.getItem("name");
 
   const [loading, setLoading] = useState(true);
 
@@ -73,7 +74,7 @@ function Chats(props) {
       await socketOn("update-room", (data) => {
         if (mounted) {
           if (data?.members.includes(idUser)) {
-            dispatch(UPDATEROOMS({ name: user.name, data }));
+            dispatch(UPDATEROOMS({ name, data }));
           }
         }
       });
@@ -172,7 +173,7 @@ function Chats(props) {
   return (
     <div className="sidebar">
       <div className="header">
-        <div className="profile">
+        <div className="profile" onClick={() => props.setOpenProfile(true)}>
           <span>{user.name && user.name.charAt(0).toUpperCase()}</span>
         </div>
         <div className="items">
@@ -186,7 +187,7 @@ function Chats(props) {
           <div className="item mr-1" onClick={() => props.setOpenContact(true)}>
             <FontAwesomeIcon
               icon={faEllipsisH}
-              className="text-white m-1"
+              className="text-white my-1 mx-1.5"
               size="xl"
             />
           </div>
